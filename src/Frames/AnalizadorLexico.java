@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import static java.util.Spliterators.iterator;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class AnalizadorLexico extends javax.swing.JFrame {
@@ -148,8 +150,9 @@ public class AnalizadorLexico extends javax.swing.JFrame {
                 System.out.println(pr[i]);                
                 token = token.replaceAll(pr[i]," "+pr[i]+" ");                               
                 System.out.println(token);
-            }
-            StringTokenizer separador2 = new StringTokenizer(token," ");               
+            }                                            
+            
+            StringTokenizer separador2 = new StringTokenizer(token," ");                                               
             System.out.println("Numero de tokens: "+separador2.countTokens());
             cod = cod + "Linea: "+lineas + " Numero de tokens: "+separador2.countTokens()+"\n";
             lineas++;
@@ -159,6 +162,7 @@ public class AnalizadorLexico extends javax.swing.JFrame {
                 cod = cod + ex.getToken(token2)+"\n";
                 cod = cod +"---------------------------------------------------------\n";
                 taAnalisis.setText(cod);
+                palabras.add(token);
             }
                                              
         }
@@ -168,11 +172,12 @@ public class AnalizadorLexico extends javax.swing.JFrame {
     private void taCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taCodigoKeyTyped
         
         codigo = taCodigo.getText();
-        for(int i=0;i<pr.length;i++){
+        
+        /*for(int i=0;i<pr.length;i++){
             System.out.println(pr[i]);                
             codigo = codigo.replaceAll(pr[i],pr[i]+" ");                               
             System.out.println(codigo);
-        }
+        }*/
         taCodigo.setText(codigo);
         
     }//GEN-LAST:event_taCodigoKeyTyped
