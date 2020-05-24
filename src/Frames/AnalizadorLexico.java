@@ -1,6 +1,6 @@
 
 package Frames;
-//HOLA 
+
 import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import infernus.Expresiones;
 import java.util.ArrayList;
@@ -46,10 +46,12 @@ public class AnalizadorLexico extends javax.swing.JFrame {
         "&",
         "\\|"
     };
+    
     String codigo = new String();  
     String cod = new String();
     String token,token2,cadena;
     Expresiones ex = new Expresiones();
+    boolean stop=true;
     
     /* 
     Origin<<
@@ -136,7 +138,8 @@ public class AnalizadorLexico extends javax.swing.JFrame {
 
     private void btnAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarActionPerformed
         
-        codigo = taCodigo.getText();        
+        codigo = taCodigo.getText();      
+        palabras.clear();
         StringTokenizer separador = new StringTokenizer(codigo,"\n");
         System.out.println("Numero de lineas: "+separador.countTokens());
         int lineas=1;
@@ -156,16 +159,29 @@ public class AnalizadorLexico extends javax.swing.JFrame {
             System.out.println("Numero de tokens: "+separador2.countTokens());
             cod = cod + "Linea: "+lineas + " Numero de tokens: "+separador2.countTokens()+"\n";
             lineas++;
-            while(separador2.hasMoreTokens()){
+            
+            while(separador2.hasMoreTokens() & stop==true){
                 token2 = separador2.nextToken();                
                 cod = cod + token2 + "\n";
                 cod = cod + ex.getToken(token2)+"\n";
+                if(ex.getToken(token).equals("Variable")){
+                    Iterator it = palabras.iterator();
+                    while(it.hasNext()){
+                        if(token2.equals(it.next())){
+                            System.out.println("Variable repetida");
+                            stop=false;
+                            cod = cod + "Variable repetida\n";
+                        }
+                    }
+                }
                 cod = cod +"---------------------------------------------------------\n";
-                taAnalisis.setText(cod);
-                palabras.add(token);
+                taAnalisis.setText(cod);              
+                palabras.add(token2);
             }
                                              
         }
+        
+        System.out.println(palabras);
                 
     }//GEN-LAST:event_btnAnalizarActionPerformed
 
